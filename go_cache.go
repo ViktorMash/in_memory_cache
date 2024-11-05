@@ -1,70 +1,25 @@
-package cache
+package go_cache
 
-import (
-	"fmt"
-)
-
-cache_map := make(map[string]interface{})
-
-
-
-
-
-fmt.Println(cache_map)
-
-
-/*
-package scheduler
-
-import (
-	"context"
-	"sync"
-	"time"
-)
-
-type Job func(ctx context.Context)
-
-type Scheduler struct {
-	wg            *sync.WaitGroup
-	cancellations []context.CancelFunc
+// Cache - структура, содержащая map для хранения данных
+type Cache struct {
+	data map[string]interface{}
 }
 
-func NewScheduler() *Scheduler {
-	return &Scheduler{
-		wg:            new(sync.WaitGroup),
-		cancellations: make([]context.CancelFunc, 0),
+// Функция-конструктор NewCache создает и возвращает указатель на новый экземпляр Cache с инициализированной map.
+func NewCache() *Cache {
+	return &Cache{
+		data: make(map[string]interface{}),
 	}
 }
 
-// Add starts goroutine which constantly calls provided job with interval delay
-func (s *Scheduler) Add(ctx context.Context, j Job, interval time.Duration) {
-	ctx, cancel := context.WithCancel(ctx)
-	s.cancellations = append(s.cancellations, cancel)
-
-	s.wg.Add(1)
-	go s.process(ctx, j, interval)
+func (c *Cache) Set(key string, value interface{}) {
+	c.data[key] = value
 }
 
-// Stop cancels all running jobs
-func (s *Scheduler) Stop() {
-	for _, cancel := range s.cancellations {
-		cancel()
-	}
-	s.wg.Wait()
+func (c *Cache) Get(key string) interface{} {
+	return c.data[key]
 }
 
-func (s *Scheduler) process(ctx context.Context, j Job, interval time.Duration) {
-	ticker := time.NewTicker(interval)
-	for {
-		select {
-		case <-ticker.C:
-			j(ctx)
-		case <-ctx.Done():
-			s.wg.Done()
-			ticker.Stop()
-			return
-		}
-	}
+func (c *Cache) Delete(key string) {
+	delete(c.data, key)
 }
-
-*/
