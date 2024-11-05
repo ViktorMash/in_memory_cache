@@ -8,6 +8,7 @@
 
 ```bash
 go get github.com/ViktorMash/in_memory_cache
+```
 
 
 ## Описание
