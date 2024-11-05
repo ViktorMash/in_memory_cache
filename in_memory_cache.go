@@ -1,4 +1,4 @@
-package go_cache
+package in_memory_cache
 
 // Cache - структура, содержащая map для хранения данных
 type Cache struct {
